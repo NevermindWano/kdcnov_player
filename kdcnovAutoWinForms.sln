@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdcnovPlayer", "KdcnovPlayer\KdcnovPlayer.csproj", "{C2D9D596-199B-4AE9-AEA8-5AE56E99CBAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "Audio\Audio.csproj", "{108FEAC2-F2F4-4684-9C34-84F013E32A2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProvider", "DataProvider\DataProvider.csproj", "{D72C38D1-41B2-43CC-9D7D-D466FAE34330}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video", "Video\Video.csproj", "{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scenario", "Scenario\Scenario.csproj", "{33CF1074-6C3F-4295-BA07-ED92BE9FB75B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playlist", "Playlist\Playlist.csproj", "{B80038CA-3461-41EE-8176-8D48148AE86A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2D9D596-199B-4AE9-AEA8-5AE56E99CBAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D9D596-199B-4AE9-AEA8-5AE56E99CBAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D9D596-199B-4AE9-AEA8-5AE56E99CBAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D9D596-199B-4AE9-AEA8-5AE56E99CBAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{108FEAC2-F2F4-4684-9C34-84F013E32A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{108FEAC2-F2F4-4684-9C34-84F013E32A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{108FEAC2-F2F4-4684-9C34-84F013E32A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{108FEAC2-F2F4-4684-9C34-84F013E32A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D72C38D1-41B2-43CC-9D7D-D466FAE34330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D72C38D1-41B2-43CC-9D7D-D466FAE34330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D72C38D1-41B2-43CC-9D7D-D466FAE34330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D72C38D1-41B2-43CC-9D7D-D466FAE34330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33CF1074-6C3F-4295-BA07-ED92BE9FB75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CF1074-6C3F-4295-BA07-ED92BE9FB75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CF1074-6C3F-4295-BA07-ED92BE9FB75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CF1074-6C3F-4295-BA07-ED92BE9FB75B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B80038CA-3461-41EE-8176-8D48148AE86A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B80038CA-3461-41EE-8176-8D48148AE86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B80038CA-3461-41EE-8176-8D48148AE86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B80038CA-3461-41EE-8176-8D48148AE86A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {20C735AA-8C2C-4D9B-93F4-9A0BF93D547A}
+	EndGlobalSection
+EndGlobal
