@@ -38,6 +38,9 @@ namespace Audio
 
         private Task task;
 
+        private bool doubleEvent;
+        private PlayerState playerState;
+
         public AIMPPlayer()
         {
             name = "aimp";
@@ -46,8 +49,7 @@ namespace Audio
 
         public void Init(PlayerStateHandler handler)
         {
-            this.handler = handler;
-            beDestroyed = false;
+            this.handler = handler;        
         }
 
         public void Play(string filename)
@@ -66,17 +68,14 @@ namespace Audio
 
                 aimp.TrackInfoChanged += (s, e) =>
                 {
-                    Thread.Sleep(200);
-                    if (aimp != null && aimp.PlayerState == PlayerState.Stopped && beDestroyed)
-                    {
-                        closeWaveOut();
-                    }
+                    if (aimp == null) return;
+                    doubleEvent = (aimp.PlayerState == playerState) ? true : false;
+                    playerState = aimp.PlayerState;
 
-                    if (aimp != null && aimp.PlayerState == PlayerState.Stopped)
+                    if (aimp.PlayerState == PlayerState.Stopped && !doubleEvent)
                     {
                         handler();
                     }
-                    Thread.Sleep(200);
                 };
             }            
         }

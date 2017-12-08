@@ -19,7 +19,6 @@ namespace kdcnovAutoWinForms
     /// </summary>
     public static class Proccess
     {
-
         #region CONSTANTS
         public const int STOP = 0;
         public const int PLAY_MAIN_TRACK = 1;
@@ -44,6 +43,7 @@ namespace kdcnovAutoWinForms
         internal static Track bgMain { get; set; }
         internal static Playlist mainPlayList;
         internal static BgPlaylist bgPlaylist { get; set; }
+        internal static int playerBgVolume { get; set; }
 
 
         static Random rnd = new Random();
@@ -75,6 +75,8 @@ namespace kdcnovAutoWinForms
                 MessageBox.Show("MIDI устройство сохранённое в настройках не найдено");
                 NAudioMidi.Init(0);
             }
+
+            playerBgVolume = SettingsReader<int>.Read("bgVolume");
 
 
             /// Инициализация OSC протокола
@@ -167,19 +169,22 @@ namespace kdcnovAutoWinForms
                 currentTrack = track;
                 currentKey = key;
 
+
                 midiSend();
                 player.Play(track.audioFilePath);
 
+              //  Diagnostic.start();
                 if (currentTrack.bg)
                 {
                     status(PLAY_BG_TRACK, currentTrack.audioFilePath);
-                    player.volume = SettingsReader<int>.Read("bgVolume");
+                    player.volume = playerBgVolume;
                 }
                 else
                 {
                     status(PLAY_MAIN_TRACK, currentTrack.name);
                     player.volume = 100;
                 }
+               // Diagnostic.stop();
             }
 
             oscSend();

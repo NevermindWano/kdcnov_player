@@ -46,7 +46,7 @@
     <Compile Include="Track.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SettingSaver\DataProvider.csproj">
+    <ProjectReference Include="..\DataProvider\DataProvider.csproj">
       <Project>{d72c38d1-41b2-43cc-9d7d-d466fae34330}</Project>
       <Name>DataProvider</Name>
     </ProjectReference>

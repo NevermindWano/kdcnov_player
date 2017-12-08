@@ -46,7 +46,7 @@ namespace kdcnovAutoWinForms
             else
                 createPlaylist();
 
-            // Подключение контекствного меню к списку треков
+            // Подключение контекстного меню к списку треков
             listTracks.ContextMenuStrip = contextMenuStrip1;
 
             // Слушатель событий
@@ -240,7 +240,10 @@ namespace kdcnovAutoWinForms
                 }
             }
             else
+            {
                 Proccess.mainPlayList = new Playlist();
+                FillListView();
+            }
         }
 
         /// <summary>
@@ -287,10 +290,12 @@ namespace kdcnovAutoWinForms
             Proccess.Play(track, selected);
             selectCurrentTrack();
             listTracks.Select();
+
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
+
             if (Proccess.currentTrack != null && !Proccess.currentTrack.bg)
             {
                 DialogResult result = MessageBox.Show("Вы действительно хотите остановить трек?", "ВНИМАНИЕ!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -299,6 +304,7 @@ namespace kdcnovAutoWinForms
                 return;
             }
             Proccess.Stop();
+
         }
 
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -342,6 +348,7 @@ namespace kdcnovAutoWinForms
                         break;
                 }
                 codeStatus = code;
+
             };
         }
 
@@ -523,10 +530,20 @@ namespace kdcnovAutoWinForms
             string[] items = new string[8];
             foreach (string stroka in test)
             {
-                items[0] = stroka;
-                ListViewItem item = new ListViewItem(items);
-                scernarioList.Items.Add(item);
+                addStringToScenarioList(items, stroka);
             }
+        }
+
+        private void trimString(string[] items, string stroka)
+        {
+
+        }
+
+        private void addStringToScenarioList(string[] items, string stroka)
+        {
+            items[0] = stroka;
+            ListViewItem item = new ListViewItem(items);
+            scenarioList.Items.Add(item);
         }
 
         private void listTracks_DoubleClick(object sender, EventArgs e)

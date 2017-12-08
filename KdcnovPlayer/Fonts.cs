@@ -44,6 +44,9 @@ namespace kdcnovAutoWinForms
             Data<byte[]> sets = new Data<byte[]>(new RegistryProvider("Fonts"));
             Dictionary<string, byte[]> values = sets.ReadAllValues();
 
+            if (values == null)
+                return;
+
             foreach (KeyValuePair<string, byte[]> value in values)
             {
                 Set(value.Key, BinarySerialize.Deserialize<Font>(value.Value));

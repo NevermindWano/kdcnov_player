@@ -61,7 +61,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.scernarioList = new System.Windows.Forms.ListView();
+            this.scenarioList = new System.Windows.Forms.ListView();
             this.textColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.trackColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip2.SuspendLayout();
@@ -342,7 +342,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.scernarioList);
+            this.tabPage2.Controls.Add(this.scenarioList);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -353,17 +353,17 @@
             // 
             // scernarioList
             // 
-            this.scernarioList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.scenarioList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.textColumn,
             this.trackColumn});
-            this.scernarioList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scernarioList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.scernarioList.Location = new System.Drawing.Point(3, 3);
-            this.scernarioList.Name = "scernarioList";
-            this.scernarioList.Size = new System.Drawing.Size(666, 395);
-            this.scernarioList.TabIndex = 0;
-            this.scernarioList.UseCompatibleStateImageBehavior = false;
-            this.scernarioList.View = System.Windows.Forms.View.Details;
+            this.scenarioList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scenarioList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.scenarioList.Location = new System.Drawing.Point(3, 3);
+            this.scenarioList.Name = "scernarioList";
+            this.scenarioList.Size = new System.Drawing.Size(666, 395);
+            this.scenarioList.TabIndex = 0;
+            this.scenarioList.UseCompatibleStateImageBehavior = false;
+            this.scenarioList.View = System.Windows.Forms.View.Details;
             // 
             // textColumn
             // 
@@ -432,7 +432,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListView scernarioList;
+        private System.Windows.Forms.ListView scenarioList;
         private System.Windows.Forms.ColumnHeader textColumn;
         private System.Windows.Forms.ColumnHeader trackColumn;
         private System.Windows.Forms.ToolStripMenuItem добавитьСценарийToolStripMenuItem;
