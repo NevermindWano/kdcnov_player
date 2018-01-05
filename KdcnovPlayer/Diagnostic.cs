@@ -14,9 +14,6 @@ namespace kdcnovAutoWinForms
         {
             swatch = new System.Diagnostics.Stopwatch(); // создаем объект
             swatch.Start(); // старт
-             
-            swatch.Stop(); // стоп
-            Console.WriteLine(swatch.Elapsed); // выводим результат в консоль
         }
 
         public static void Stop()

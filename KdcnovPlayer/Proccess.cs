@@ -85,7 +85,7 @@ namespace kdcnovAutoWinForms
             ip = ip ?? "127.0.0.1";
             port = (port != 0) ? port : 7000;
 
-            OSC.init(ip, port);
+            OSC.Init(ip, port);
 
             /// Инициализация плеера
             string setPlayer = SettingsReader<string>.Read("defaultPlayer");
@@ -93,7 +93,7 @@ namespace kdcnovAutoWinForms
             {
                 if (setPlayer != null)
                 {
-                    switch (SettingsReader<string>.Read("defaultPlayer"))
+                    switch (setPlayer)
                     {
                         case "naudio":
                             player = new NAudioPlayer();
@@ -173,7 +173,9 @@ namespace kdcnovAutoWinForms
                 midiSend();
                 player.Play(track.audioFilePath);
 
-              //  Diagnostic.start();
+#if DEBUG
+                Diagnostic.Start();
+#endif
                 if (currentTrack.bg)
                 {
                     status(PLAY_BG_TRACK, currentTrack.audioFilePath);
@@ -184,7 +186,9 @@ namespace kdcnovAutoWinForms
                     status(PLAY_MAIN_TRACK, currentTrack.name);
                     player.volume = 100;
                 }
-               // Diagnostic.stop();
+#if DEBUG
+                Diagnostic.Stop();
+#endif
             }
 
             oscSend();
@@ -214,7 +218,7 @@ namespace kdcnovAutoWinForms
         /// </summary>
         private static void oscSend()
         {
-           OSC.onTrack(currentTrack.oscCommand);
+           OSC.OnTrack(currentTrack.oscCommand);
         }
 
         private static void midiSend()

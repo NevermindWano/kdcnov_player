@@ -36,8 +36,6 @@ namespace Audio
 
         private IAimpRemote aimp;
 
-        private Task task;
-
         private bool doubleEvent;
         private PlayerState playerState;
 

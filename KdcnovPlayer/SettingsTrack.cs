@@ -92,7 +92,7 @@ namespace kdcnovAutoWinForms
 
         private void oscSendButton_Click(object sender, EventArgs e)
         {
-            OSC.onTrack((int)oscUpDown.Value);
+            OSC.OnTrack((int)oscUpDown.Value);
         }
 
         private void midiNoteRadio_CheckedChanged(object sender, EventArgs e)

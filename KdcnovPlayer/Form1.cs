@@ -209,6 +209,7 @@ namespace kdcnovAutoWinForms
                 if (Proccess.mainPlayList != null)
                 {
                     Proccess.mainPlayList.namePlaylist = playlistFileName;
+                    FillListView();
                 }
             }
             catch
