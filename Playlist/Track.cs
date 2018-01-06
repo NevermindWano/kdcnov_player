@@ -46,13 +46,14 @@ namespace PlaylistLib
         public Track(bool bg)
         {
             this.bg = bg;
+            Data options = new Data();
 
-            string value = new Data<string>(new RegistryProvider(), "mainTrackPath").Read();
+            string value = options.Read<string>("mainTrackPath");
             if (value != null)
             {
                 audioFilePath = value;
-                midiNote = new Data<int>(new RegistryProvider(), "mainMidiNote").Read();
-                oscCommand = new Data<int>(new RegistryProvider(), "mainTrackOsc").Read();
+                midiNote = options.Read<int>("mainMidiNote");
+                oscCommand = options.Read<int>("mainTrackOsc");
                 bg = true;
                 isMidiNote = true;
                 next = nextTrack.cycle;

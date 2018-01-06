@@ -35,8 +35,9 @@ namespace kdcnovAutoWinForms
 
             // Получаем из реестра путь к файлу плейлиста, и если 
             // такой путь получен - открываем плейлист
-            Data<string> readSettings = new Data<string>(new RegistryProvider(), "playlistFilePath");
-            playlistFileName = readSettings.Read();
+            Data readSettings = new Data();
+            playlistFileName = readSettings.Read<string>("playlistFilePath");
+
             if (playlistFileName != null && playlistFileName != "")
             {
                 openPlaylist();
@@ -172,7 +173,7 @@ namespace kdcnovAutoWinForms
             string filename = savePlaylist.FileName;
 
             Proccess.mainPlayList.Save(filename);
-            new Data<string>(new RegistryProvider(), "playlistFilePath", filename);
+            new Data().Save("playlistFilePath", filename);
         }
 
         /// <summary>
@@ -194,7 +195,7 @@ namespace kdcnovAutoWinForms
 
             openPlaylist();
 
-            new Data<string>(new RegistryProvider(), "playlistFilePath", playlistFileName);
+            new Data().Save("playlistFilePath", playlistFileName);
         }
 
         /// <summary>

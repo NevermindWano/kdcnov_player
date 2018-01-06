@@ -13,7 +13,9 @@ namespace kdcnovAutoWinForms
     {
         private static string key;
 
-        private static Dictionary<string, Font> fonts = new Dictionary<string, Font>();   
+        private static Dictionary<string, Font> fonts = new Dictionary<string, Font>();
+
+        private static Data options = new Data(new RegistryProvider("Fonts"));
     
         internal static void Set(string key, Font font)
         {
@@ -35,14 +37,13 @@ namespace kdcnovAutoWinForms
             foreach (KeyValuePair<string, Font> font in fonts)
             {
                 byte[] binObj = BinarySerialize.Serialize<Font>(font.Value);
-                new Data<byte[]>(new RegistryProvider("Fonts"), font.Key, binObj);                
+                options.Save(font.Key, binObj);                
             }
         }
 
         internal static void ReadFromRegistry()
-        {
-            Data<byte[]> sets = new Data<byte[]>(new RegistryProvider("Fonts"));
-            Dictionary<string, byte[]> values = sets.ReadAllValues();
+        {            
+            Dictionary<string, byte[]> values = options.ReadAllValues<byte[]>();
 
             if (values == null)
                 return;

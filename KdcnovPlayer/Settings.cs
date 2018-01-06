@@ -22,12 +22,14 @@ namespace kdcnovAutoWinForms
 
         private string mainTrackPath = "";
         private MainForm form;
+        private Data options;
 
         public Settings(MainForm form)
         {
             InitializeComponent();
 
             this.form = form;
+            this.options = new Data();
 
             getDefaultPlayer();
             getMidiDevices();
@@ -58,7 +60,7 @@ namespace kdcnovAutoWinForms
                 mainTrackMIdi.Value = Proccess.bgMain.midiNote;
             }
 
-            volumeUpDown.Value = SettingsReader<int>.Read("bgVolume");
+            volumeUpDown.Value = options.Read<int>("bgVolume");
         }
 
         private void getMidiDevices()
@@ -67,15 +69,15 @@ namespace kdcnovAutoWinForms
             {
                 midiDeviceComboBox.Items.Insert(device.Key, device.Value);
             }
-            try { midiDeviceComboBox.SelectedIndex = SettingsReader<int>.Read("midiDeviceNo"); }
+            try { midiDeviceComboBox.SelectedIndex = options.Read<int>("midiDeviceNo"); }
             catch { }
         }
 
         private void getDefaultPlayer()
         {
-            if (SettingsReader<string>.Read("defaultPlayer") != null)
+            if (options.Read<string>("defaultPlayer") != null)
             {
-                switch (SettingsReader<string>.Read("defaultPlayer"))
+                switch (options.Read<string>("defaultPlayer"))
                 {
                     case "naudio":
                         naudioRadioButton.Checked = true;
@@ -112,11 +114,11 @@ namespace kdcnovAutoWinForms
         private void saveButton_Click(object sender, EventArgs e)
         {
             if (naudioRadioButton.Checked)
-                new Data<string>(new RegistryProvider(), "defaultPlayer", "naudio");
+                options.Save("defaultPlayer", "naudio");
             if (aimpRadioButton.Checked)
-                new Data<string>(new RegistryProvider(), "defaultPlayer", "aimp");
+                options.Save("defaultPlayer", "aimp");
 
-            new Data<int>(new RegistryProvider(), "midiDeviceNo", (int)midiDeviceComboBox.SelectedIndex);
+            options.Save("midiDeviceNo", midiDeviceComboBox.SelectedIndex);
 
             saveBgSettings();
             saveOSCSettings();
@@ -130,13 +132,13 @@ namespace kdcnovAutoWinForms
 
         private void saveBgSettings()
         {
-            new Data<string[]>("bgMidiNotes", getListViewsParams(midiListView));
-            new Data<string[]>("bgOscTracks", getListViewsParams(oscListView));
+            options.Save("bgMidiNotes", getListViewsParams(midiListView));
+            options.Save("bgOscTracks", getListViewsParams(oscListView));
 
-            new Data<int>("bgVolume", (int)volumeUpDown.Value);
+            options.Save("bgVolume", (int)volumeUpDown.Value);
 
             // Фоновый плейлист
-            new Data<string>("bgPlaylistFolder", folderPathBox.Text);
+            options.Save("bgPlaylistFolder", folderPathBox.Text);
 
             Proccess.bgMain = new Track(true)
             {
@@ -145,15 +147,15 @@ namespace kdcnovAutoWinForms
                 oscCommand = (int)mainTrackOSCUpDown.Value
             };
 
-            new Data<string>(new RegistryProvider(), "mainTrackPath", mainTrackTextBox.Text);
-            new Data<int>(new RegistryProvider(), "mainMidiNote", (int)mainTrackMIdi.Value);
-            new Data<int>(new RegistryProvider(), "mainTrackOsc", (int)mainTrackOSCUpDown.Value);
+            options.Save("mainTrackPath", mainTrackTextBox.Text);
+            options.Save("mainMidiNote", (int)mainTrackMIdi.Value);
+            options.Save("mainTrackOsc", (int)mainTrackOSCUpDown.Value);
         }
 
         private void saveOSCSettings()
         {
-            new Data<string>(new RegistryProvider(), "oscIP", ipTextBox.Text);
-            new Data<int>(new RegistryProvider(), "oscPORT", (int)portUpDown.Value);
+            options.Save("oscIP", ipTextBox.Text);
+            options.Save("oscPORT", (int)portUpDown.Value);
         }      
 
         private void getOSCSettings()
@@ -315,6 +317,15 @@ namespace kdcnovAutoWinForms
                 return;
             bgFontTextBox.Text = fontDialog.Font.Name;
             bgFontTextBox.Font = fontDialog.Font;
+        }
+
+        ~Settings()
+        {
+            form.Dispose();
+            form = null;
+
+            options.Dispose();
+            options = null;
         }
     }
 }

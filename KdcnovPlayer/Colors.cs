@@ -55,9 +55,9 @@ namespace kdcnovAutoWinForms
 
         public static void ReadFromRegistry()
         {
-            Data<long> sets = new Data<long>(new RegistryProvider("Colors"));
+            Data sets = new Data(new RegistryProvider("Colors"));
 
-            Dictionary<string, long> values = sets.ReadAllValues();
+            Dictionary<string, long> values = sets.ReadAllValues<long>();
 
             if (values == null)
                 values = DEFAULT_COLORS;
@@ -72,7 +72,7 @@ namespace kdcnovAutoWinForms
         {
             foreach (KeyValuePair<string, Color> color in colors)
             {
-                new Data<int>(new RegistryProvider("Colors"), color.Key, color.Value.ToArgb());
+                new Data(new RegistryProvider("Colors")).Save(color.Key, color.Value.ToArgb());
             }
         }
 

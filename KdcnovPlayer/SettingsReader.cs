@@ -11,8 +11,11 @@ namespace kdcnovAutoWinForms
     {
         static internal T Read(string key, string section = "")
         {
-            Data<T> value = new Data<T>(new RegistryProvider(section), key);
-            return value.Read();
+            Data value = new Data(new RegistryProvider(section));
+            var response = value.Read<T>(key);
+            value.Dispose();
+            return response;
+
         }
     }
 }

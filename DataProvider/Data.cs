@@ -10,54 +10,27 @@ namespace DataProvider
     /// Key-Value Data. Класс отвечающий за запись данных в виде Ключ-Значение
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Data<T>
+    public class Data : IDisposable
     {
         private IKeyValueProvider provider = new RegistryProvider();
 
-        private string key;
-        private T value;
+        #region CONSTRUCTORS
 
-#region CONSTRUCTORS
+        public Data() {}
 
         public Data(IKeyValueProvider provider)
         {
             this.provider = provider;
         }
 
-        public Data(IKeyValueProvider provider, string key)
-        {
-            this.provider = provider;
-            this.key = key;
-        }
-
-        public Data(string key)
-        {
-            this.key = key;
-        }
-
-        public Data(IKeyValueProvider provider, string key, T value)
-        {
-            this.provider = provider;
-            this.key = key;
-            this.value = value;
-            Save();
-        }
-
-        public Data(string key, T value)
-        {
-            this.key = key;
-            this.value = value;
-            Save();
-        }
-
 #endregion
 
-        public void Save()
+        public void Save<T>(string key, T value)
         {
             provider.Save(key.ToString(), value);
         }            
         
-        public T Read()
+        public T Read<T>(string key)
         {
             var value = provider.Read(key.ToString());
             if (value == null)
@@ -65,7 +38,7 @@ namespace DataProvider
             return (T)Convert.ChangeType(value, typeof(T));
         }    
 
-        public Dictionary<string, T> ReadAllValues()
+        public Dictionary<string, T> ReadAllValues<T>()
         {
             string[] value = provider.GetAllKeys();
             if (value == null) return null;
@@ -78,6 +51,10 @@ namespace DataProvider
             }
             return values;
         }
-     
+
+        public void Dispose()
+        {
+            provider = null;
+        }
     }
 }

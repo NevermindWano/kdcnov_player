@@ -14,6 +14,9 @@ namespace kdcnovAutoWinForms
         public List<int> midiNotes { get; set; }
         public List<int> oscTracks { get; set; }
 
+        private DataProvider.Data options = new DataProvider.Data();
+        
+
         public BgPlaylist(string folderPath)
         {
             if (folderPath == null || folderPath == "")
@@ -30,13 +33,14 @@ namespace kdcnovAutoWinForms
 
             try
             {
-                midiNotes = SettingsReader<string[]>.Read("bgMidiNotes").Select(int.Parse).ToList();
+                midiNotes = options.Read<string[]>("bgMidiNotes").Select(int.Parse).ToList();
             }
             catch { }
             try
             {
-                oscTracks = SettingsReader<string[]>.Read("bgOscTracks").Select(int.Parse).ToList();
+                oscTracks = options.Read<string[]>("bgOscTracks").Select(int.Parse).ToList();
             } catch { }
+            options.Dispose();
         }
     }
 }
