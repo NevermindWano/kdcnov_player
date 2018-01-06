@@ -38,7 +38,6 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.midiUpDown = new System.Windows.Forms.NumericUpDown();
             this.sendMidiButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.oscSendButton = new System.Windows.Forms.Button();
             this.oscUpDown = new System.Windows.Forms.NumericUpDown();
             this.midiNoteRadio = new System.Windows.Forms.RadioButton();
@@ -47,10 +46,21 @@
             this.mainRadioButton = new System.Windows.Forms.RadioButton();
             this.bgRadioButton = new System.Windows.Forms.RadioButton();
             this.midiGroupBox = new System.Windows.Forms.GroupBox();
+            this.OSCBox = new System.Windows.Forms.GroupBox();
+            this.customOSCTextBox = new System.Windows.Forms.TextBox();
+            this.customOSCCommand = new System.Windows.Forms.RadioButton();
+            this.clipUpDown = new System.Windows.Forms.NumericUpDown();
+            this.ResolumeCLIP = new System.Windows.Forms.RadioButton();
+            this.ResolumeTRACK = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.bpmUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.midiUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oscUpDown)).BeginInit();
             this.midiGroupBox.SuspendLayout();
+            this.OSCBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clipUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // nameTextBox
@@ -104,7 +114,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(371, 387);
+            this.saveButton.Location = new System.Drawing.Point(395, 442);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 7;
@@ -129,18 +139,9 @@
             this.sendMidiButton.UseVisualStyleBackColor = true;
             this.sendMidiButton.Click += new System.EventHandler(this.sendMidiButton_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 276);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "OSC track";
-            // 
             // oscSendButton
             // 
-            this.oscSendButton.Location = new System.Drawing.Point(234, 274);
+            this.oscSendButton.Location = new System.Drawing.Point(365, 110);
             this.oscSendButton.Name = "oscSendButton";
             this.oscSendButton.Size = new System.Drawing.Size(75, 23);
             this.oscSendButton.TabIndex = 13;
@@ -150,7 +151,7 @@
             // 
             // oscUpDown
             // 
-            this.oscUpDown.Location = new System.Drawing.Point(108, 274);
+            this.oscUpDown.Location = new System.Drawing.Point(180, 19);
             this.oscUpDown.Name = "oscUpDown";
             this.oscUpDown.Size = new System.Drawing.Size(120, 20);
             this.oscUpDown.TabIndex = 14;
@@ -223,17 +224,95 @@
             this.midiGroupBox.TabStop = false;
             this.midiGroupBox.Text = "MIDI";
             // 
-            // SetiingsTrack
+            // OSCBox
+            // 
+            this.OSCBox.Controls.Add(this.numericUpDown1);
+            this.OSCBox.Controls.Add(this.label1);
+            this.OSCBox.Controls.Add(this.customOSCTextBox);
+            this.OSCBox.Controls.Add(this.customOSCCommand);
+            this.OSCBox.Controls.Add(this.clipUpDown);
+            this.OSCBox.Controls.Add(this.ResolumeCLIP);
+            this.OSCBox.Controls.Add(this.ResolumeTRACK);
+            this.OSCBox.Controls.Add(this.oscUpDown);
+            this.OSCBox.Controls.Add(this.oscSendButton);
+            this.OSCBox.Location = new System.Drawing.Point(24, 271);
+            this.OSCBox.Name = "OSCBox";
+            this.OSCBox.Size = new System.Drawing.Size(446, 139);
+            this.OSCBox.TabIndex = 21;
+            this.OSCBox.TabStop = false;
+            this.OSCBox.Text = "OSC";
+            // 
+            // customOSCTextBox
+            // 
+            this.customOSCTextBox.Location = new System.Drawing.Point(180, 72);
+            this.customOSCTextBox.Name = "customOSCTextBox";
+            this.customOSCTextBox.Size = new System.Drawing.Size(260, 20);
+            this.customOSCTextBox.TabIndex = 19;
+            // 
+            // customOSCCommand
+            // 
+            this.customOSCCommand.AutoSize = true;
+            this.customOSCCommand.Location = new System.Drawing.Point(24, 73);
+            this.customOSCCommand.Name = "customOSCCommand";
+            this.customOSCCommand.Size = new System.Drawing.Size(146, 17);
+            this.customOSCCommand.TabIndex = 18;
+            this.customOSCCommand.Text = "Произвольная команда";
+            this.customOSCCommand.UseVisualStyleBackColor = true;
+            // 
+            // clipUpDown
+            // 
+            this.clipUpDown.Location = new System.Drawing.Point(180, 45);
+            this.clipUpDown.Name = "clipUpDown";
+            this.clipUpDown.Size = new System.Drawing.Size(120, 20);
+            this.clipUpDown.TabIndex = 17;
+            // 
+            // ResolumeCLIP
+            // 
+            this.ResolumeCLIP.AutoSize = true;
+            this.ResolumeCLIP.Location = new System.Drawing.Point(24, 46);
+            this.ResolumeCLIP.Name = "ResolumeCLIP";
+            this.ResolumeCLIP.Size = new System.Drawing.Size(98, 17);
+            this.ResolumeCLIP.TabIndex = 16;
+            this.ResolumeCLIP.Text = "Resolume CLIP";
+            this.ResolumeCLIP.UseVisualStyleBackColor = true;
+            // 
+            // ResolumeTRACK
+            // 
+            this.ResolumeTRACK.AutoSize = true;
+            this.ResolumeTRACK.Checked = true;
+            this.ResolumeTRACK.Location = new System.Drawing.Point(24, 22);
+            this.ResolumeTRACK.Name = "ResolumeTRACK";
+            this.ResolumeTRACK.Size = new System.Drawing.Size(111, 17);
+            this.ResolumeTRACK.TabIndex = 15;
+            this.ResolumeTRACK.TabStop = true;
+            this.ResolumeTRACK.Text = "Resolume TRACK";
+            this.ResolumeTRACK.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(306, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "LAYER";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(354, 46);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(86, 20);
+            this.numericUpDown1.TabIndex = 21;
+            // 
+            // SettingsTrack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 477);
+            this.Controls.Add(this.OSCBox);
             this.Controls.Add(this.midiGroupBox);
             this.Controls.Add(this.bgRadioButton);
             this.Controls.Add(this.mainRadioButton);
-            this.Controls.Add(this.oscUpDown);
-            this.Controls.Add(this.oscSendButton);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nextComboBox);
             this.Controls.Add(this.nextLabel);
@@ -242,13 +321,17 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "SetiingsTrack";
+            this.Name = "SettingsTrack";
             this.Text = "SetiingsTrack";
             ((System.ComponentModel.ISupportInitialize)(this.bpmUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.midiUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oscUpDown)).EndInit();
             this.midiGroupBox.ResumeLayout(false);
             this.midiGroupBox.PerformLayout();
+            this.OSCBox.ResumeLayout(false);
+            this.OSCBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clipUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,7 +348,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.NumericUpDown midiUpDown;
         private System.Windows.Forms.Button sendMidiButton;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button oscSendButton;
         private System.Windows.Forms.NumericUpDown oscUpDown;
         private System.Windows.Forms.RadioButton midiNoteRadio;
@@ -274,5 +356,13 @@
         private System.Windows.Forms.RadioButton mainRadioButton;
         private System.Windows.Forms.RadioButton bgRadioButton;
         private System.Windows.Forms.GroupBox midiGroupBox;
+        private System.Windows.Forms.GroupBox OSCBox;
+        private System.Windows.Forms.TextBox customOSCTextBox;
+        private System.Windows.Forms.RadioButton customOSCCommand;
+        private System.Windows.Forms.NumericUpDown clipUpDown;
+        private System.Windows.Forms.RadioButton ResolumeCLIP;
+        private System.Windows.Forms.RadioButton ResolumeTRACK;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -62,7 +62,7 @@ namespace kdcnovAutoWinForms
                 return;
             }
 
-                track.name = nameTextBox.Text;
+            track.name = nameTextBox.Text;
             track.bpm = (int)bpmUpDown.Value;
             track.next = (nextTrack)nextComboBox.SelectedValue;
             track.midiNote = (int)midiUpDown.Value;
