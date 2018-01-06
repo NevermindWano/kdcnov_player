@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "Audio\Audio.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProvider", "DataProvider\DataProvider.csproj", "{D72C38D1-41B2-43CC-9D7D-D466FAE34330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video", "Video\Video.csproj", "{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSC", "Video\OSC.csproj", "{0E3D5620-9EE0-4DAF-9F23-1E7B8CD8EF6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scenario", "Scenario\Scenario.csproj", "{33CF1074-6C3F-4295-BA07-ED92BE9FB75B}"
 EndProject

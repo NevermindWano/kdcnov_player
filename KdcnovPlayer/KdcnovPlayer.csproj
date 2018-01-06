@@ -172,9 +172,9 @@
       <Project>{d72c38d1-41b2-43cc-9d7d-d466fae34330}</Project>
       <Name>DataProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Video\Video.csproj">
+    <ProjectReference Include="..\Video\OSC.csproj">
       <Project>{0e3d5620-9ee0-4daf-9f23-1e7b8cd8ef6a}</Project>
-      <Name>Video</Name>
+      <Name>OSC</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

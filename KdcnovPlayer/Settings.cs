@@ -130,13 +130,13 @@ namespace kdcnovAutoWinForms
 
         private void saveBgSettings()
         {
-            new Data<string[]>(new RegistryProvider(), "bgMidiNotes", getListViewsParams(midiListView));
-            new Data<string[]>(new RegistryProvider(), "bgOscTracks", getListViewsParams(oscListView));
+            new Data<string[]>("bgMidiNotes", getListViewsParams(midiListView));
+            new Data<string[]>("bgOscTracks", getListViewsParams(oscListView));
 
-            new Data<int>(new RegistryProvider(), "bgVolume", (int)volumeUpDown.Value);
+            new Data<int>("bgVolume", (int)volumeUpDown.Value);
 
             // Фоновый плейлист
-            new Data<string>(new RegistryProvider(), "bgPlaylistFolder", folderPathBox.Text);
+            new Data<string>("bgPlaylistFolder", folderPathBox.Text);
 
             Proccess.bgMain = new Track(true)
             {

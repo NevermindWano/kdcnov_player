@@ -6,41 +6,60 @@ using System.Threading.Tasks;
 
 namespace DataProvider
 {
+    /// <summary>
+    /// Key-Value Data. Класс отвечающий за запись данных в виде Ключ-Значение
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Data<T>
     {
-        private IData saver;
+        private IKeyValueProvider provider = new RegistryProvider();
 
-        public string key;
-        public T value;
+        private string key;
+        private T value;
 
-        public Data(IData saver)
+#region CONSTRUCTORS
+
+        public Data(IKeyValueProvider provider)
         {
-            this.saver = saver;
+            this.provider = provider;
         }
 
-        public Data(IData saver, string key)
+        public Data(IKeyValueProvider provider, string key)
         {
-            this.saver = saver;
+            this.provider = provider;
             this.key = key;
         }
 
-        public Data(IData saver, string key, T value)
+        public Data(string key)
         {
-            this.saver = saver;
+            this.key = key;
+        }
+
+        public Data(IKeyValueProvider provider, string key, T value)
+        {
+            this.provider = provider;
             this.key = key;
             this.value = value;
-
             Save();
         }
-        
+
+        public Data(string key, T value)
+        {
+            this.key = key;
+            this.value = value;
+            Save();
+        }
+
+#endregion
+
         public void Save()
         {
-            saver.Save(key.ToString(), value);
+            provider.Save(key.ToString(), value);
         }            
         
         public T Read()
         {
-            var value = saver.Read(key.ToString());
+            var value = provider.Read(key.ToString());
             if (value == null)
                 return default(T);
             return (T)Convert.ChangeType(value, typeof(T));
@@ -48,13 +67,13 @@ namespace DataProvider
 
         public Dictionary<string, T> ReadAllValues()
         {
-            string[] value = saver.GetAllKeys();
+            string[] value = provider.GetAllKeys();
             if (value == null) return null;
 
             Dictionary<string, T> values = new Dictionary<string, T>();
             foreach (string name in value)
             {
-                var v = saver.Read(name);
+                var v = provider.Read(name);
                 values[name] = (T)Convert.ChangeType(v, typeof(T));
             }
             return values;
