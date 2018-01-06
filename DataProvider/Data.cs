@@ -54,7 +54,7 @@ namespace DataProvider
 
         public void Dispose()
         {
-            provider = null;
+            provider = null;            
         }
     }
 }

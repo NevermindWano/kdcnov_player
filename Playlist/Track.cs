@@ -28,6 +28,7 @@ namespace PlaylistLib
     {
         public string name { get; set; }
         public string audioFilePath { get; set; }
+        public string duration { get; set; }
         public nextTrack next { get; set; }
         public Track nextBg { get; set; }
         public int bpm { get; set; }
@@ -58,6 +59,7 @@ namespace PlaylistLib
                 isMidiNote = true;
                 next = nextTrack.cycle;
             }
+            options.Dispose();
         }
     }
 

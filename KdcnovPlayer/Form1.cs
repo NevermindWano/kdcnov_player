@@ -35,8 +35,8 @@ namespace kdcnovAutoWinForms
 
             // Получаем из реестра путь к файлу плейлиста, и если 
             // такой путь получен - открываем плейлист
-            Data readSettings = new Data();
-            playlistFileName = readSettings.Read<string>("playlistFilePath");
+
+            playlistFileName = new Data().Read<string>("playlistFilePath");
 
             if (playlistFileName != null && playlistFileName != "")
             {
@@ -80,15 +80,19 @@ namespace kdcnovAutoWinForms
 
             int key = 1;
 
+
             foreach (KeyValuePair<int, Track> track in Proccess.mainPlayList.tracks)
             {
                 if (HideBgTrack.Checked && track.Value.bg) continue;
+
                 // Номер трека по порядку
                 items[0] = key.ToString();
                 // Имя трека
                 items[1] = track.Value.name;
                 // Длительность трека
-                items[2] = NAudioPlayer.GetDuration(track.Value.audioFilePath);
+                if ((track.Value.duration == null) || (track.Value.duration == ""))
+                    track.Value.duration = NAudioPlayer.GetDuration(track.Value.audioFilePath);
+                items[2] = track.Value.duration;
                 // Номер OSC трека
                 items[3] = track.Value.oscCommand.ToString();
                 // MIDI - нота или MIDI - файл
@@ -153,6 +157,7 @@ namespace kdcnovAutoWinForms
                 listTracks.Items.Add(item);
                 key++;
             }
+
         }
 
         /// <summary>

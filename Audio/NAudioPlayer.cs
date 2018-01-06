@@ -84,7 +84,13 @@ namespace Audio
 
         public static string GetDuration(string filename)
         {
-            return new MediaFoundationReader(filename).TotalTime.ToString(@"mm\:ss");
+            string response;
+            using (var media = new MediaFoundationReader(filename, new MediaFoundationReader.MediaFoundationReaderSettings() { SingleReaderObject = true }))
+            {
+                response = media.TotalTime.ToString(@"mm\:ss");
+                media.Dispose();
+            }
+            return response;
 
            // return new AudioFileReader(filename).TotalTime;
         }
@@ -103,5 +109,6 @@ namespace Audio
                 run = false;
             }
         }
+        
     }
 }

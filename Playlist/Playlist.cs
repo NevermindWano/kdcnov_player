@@ -91,7 +91,10 @@ namespace PlaylistLib
             {
                 using (FileStream fs = new FileStream(filename, FileMode.Open))
                 {
-                    return (Playlist)formatter.Deserialize(fs);
+                    var response = formatter.Deserialize(fs);
+                    fs.Dispose();
+                    formatter = null;
+                    return (Playlist)response;
                 }
             }
             catch (Exception e)

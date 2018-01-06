@@ -27,7 +27,6 @@ namespace kdcnovAutoWinForms
         #endregion
 
         public static IPlayer player { get; set; }
-        private static IPlayer tempPlayer { get; set; }
 
         /// <summary>
         /// Свойство "текущий трек"
@@ -63,9 +62,11 @@ namespace kdcnovAutoWinForms
         /// </summary>
         internal static void Init()
         {
+            Data options = new Data();
+
             /// MIDI Выход
             int midiDevice = 0;
-            midiDevice = SettingsReader<int>.Read("midiDeviceNo");
+            midiDevice = options.Read<int>("midiDeviceNo");
             try
             {
                 NAudioMidi.Init(midiDevice);
@@ -76,19 +77,19 @@ namespace kdcnovAutoWinForms
                 NAudioMidi.Init(0);
             }
 
-            playerBgVolume = SettingsReader<int>.Read("bgVolume");
+            playerBgVolume = options.Read<int>("bgVolume");
 
 
             /// Инициализация OSC протокола
-            ip = SettingsReader<string>.Read("oscIP");
-            port = SettingsReader<int>.Read("oscPORT");
+            ip = options.Read<string>("oscIP");
+            port = options.Read<int>("oscPORT");
             ip = ip ?? "127.0.0.1";
             port = (port != 0) ? port : 7000;
 
             OSC.Init(ip, port);
 
             /// Инициализация плеера
-            string setPlayer = SettingsReader<string>.Read("defaultPlayer");
+            string setPlayer = options.Read<string>("defaultPlayer");
             if (player == null || player.name != setPlayer)
             {
                 if (setPlayer != null)
@@ -108,12 +109,12 @@ namespace kdcnovAutoWinForms
                     player = new AIMPPlayer();
                 }
             }
-
-            // TODO Временное решение!!!!!!
-            string value = SettingsReader<string>.Read("bgPlaylistFolder");
+            string value = options.Read<string>("bgPlaylistFolder");
             if (value != null)
                 bgPlaylist = new BgPlaylist(value);
 
+            options.Dispose();
+            options = null;
 
         }
 
@@ -153,8 +154,6 @@ namespace kdcnovAutoWinForms
         /// <param name="key"></param>
         internal static void Play(Track track, int key)
         {
-            if (tempPlayer != null)
-                tempPlayer = null;
 
             // Инициализация плеера. 
             player.Init(() => getNext());
@@ -173,9 +172,6 @@ namespace kdcnovAutoWinForms
                 midiSend();
                 player.Play(track.audioFilePath);
 
-#if DEBUG
-                Diagnostic.Start();
-#endif
                 if (currentTrack.bg)
                 {
                     status(PLAY_BG_TRACK, currentTrack.audioFilePath);
@@ -186,9 +182,6 @@ namespace kdcnovAutoWinForms
                     status(PLAY_MAIN_TRACK, currentTrack.name);
                     player.volume = 100;
                 }
-#if DEBUG
-                Diagnostic.Stop();
-#endif
             }
 
             oscSend();
@@ -196,12 +189,6 @@ namespace kdcnovAutoWinForms
 
         internal static void Stop()
         {
-            if (tempPlayer != null)
-            {
-                tempPlayer.Stop();
-                tempPlayer = null;
-            }
-
             player.Stop();
             NAudioMidi.Stop();
             status(STOP);
