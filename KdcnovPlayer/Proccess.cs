@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Audio;
 using System.Windows.Forms;
 using DataProvider;
-using System.IO;
 using Video;
 using System.Threading;
 using PlaylistLib;
+using System.Threading.Tasks;
 
 namespace kdcnovAutoWinForms
 {
@@ -54,61 +50,68 @@ namespace kdcnovAutoWinForms
             // UNDONE: При переключении плеера во время воспроизведения - косяк
 
             bgMain = new Track(true);
+
             Init();
         }
 
         /// <summary>
         /// Инициализация устройств
         /// </summary>
-        internal static void Init()
+        internal static async void Init()
         {
             Data options = new Data();
 
             /// MIDI Выход
-            int midiDevice = 0;
-            midiDevice = options.Read<int>("midiDeviceNo");
-            try
+
+            await Task.Run(() =>
             {
-                NAudioMidi.Init(midiDevice);
-            }
-            catch
-            {
-                MessageBox.Show("MIDI устройство сохранённое в настройках не найдено");
-                NAudioMidi.Init(0);
-            }
 
-            playerBgVolume = options.Read<int>("bgVolume");
-
-
-            /// Инициализация OSC протокола
-            ip = options.Read<string>("oscIP");
-            port = options.Read<int>("oscPORT");
-            ip = ip ?? "127.0.0.1";
-            port = (port != 0) ? port : 7000;
-
-            OSC.Init(ip, port);
-
-            /// Инициализация плеера
-            string setPlayer = options.Read<string>("defaultPlayer");
-            if (player == null || player.name != setPlayer)
-            {
-                if (setPlayer != null)
+                int midiDevice = 0;
+                midiDevice = options.Read<int>("midiDeviceNo");
+                try
                 {
-                    switch (setPlayer)
+                    NAudioMidi.Init(midiDevice);
+                }
+                catch
+                {
+                    MessageBox.Show("MIDI устройство сохранённое в настройках не найдено");
+                    NAudioMidi.Init(0);
+                }
+
+                playerBgVolume = options.Read<int>("bgVolume");
+
+
+                /// Инициализация OSC протокола
+                ip = options.Read<string>("oscIP");
+                port = options.Read<int>("oscPORT");
+                ip = ip ?? "127.0.0.1";
+                port = (port != 0) ? port : 7000;
+
+                OSC.Init(ip, port);
+
+                /// Инициализация плеера
+                string setPlayer = options.Read<string>("defaultPlayer");
+                if (player == null || player.name != setPlayer)
+                {
+                    if (setPlayer != null)
                     {
-                        case "naudio":
-                            player = new NAudioPlayer();
-                            break;
-                        case "aimp":
-                            player = new AIMPPlayer();
-                            break;
+                        switch (setPlayer)
+                        {
+                            case "naudio":
+                                player = new NAudioPlayer();
+                                break;
+                            case "aimp":
+                                player = new AIMPPlayer();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        player = new AIMPPlayer();
                     }
                 }
-                else
-                {
-                    player = new AIMPPlayer();
-                }
-            }
+
+            });
             string value = options.Read<string>("bgPlaylistFolder");
             if (value != null)
                 bgPlaylist = new BgPlaylist(value);

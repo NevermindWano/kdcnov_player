@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using kdcnovAutoWinForms;
 using DataProvider;
 using Audio;
 using Scenario;
@@ -90,8 +86,12 @@ namespace kdcnovAutoWinForms
                 // Имя трека
                 items[1] = track.Value.name;
                 // Длительность трека
-                if ((track.Value.duration == null) || (track.Value.duration == ""))
-                    track.Value.duration = NAudioPlayer.GetDuration(track.Value.audioFilePath);
+                try
+                {
+                    if ((track.Value.duration == null) || (track.Value.duration == ""))
+                        track.Value.duration = NAudioPlayer.GetDuration(track.Value.audioFilePath);
+                }
+                catch { }
                 items[2] = track.Value.duration;
                 // Номер OSC трека
                 items[3] = track.Value.oscCommand.ToString();
@@ -191,16 +191,21 @@ namespace kdcnovAutoWinForms
             OpenFileDialog openPlaylistFile = new OpenFileDialog
             {
                 Filter = "Playlist File (*.pls)|*.pls"
-            }; 
+            };
 
             if (openPlaylistFile.ShowDialog() == DialogResult.Cancel)
+            {
+                openPlaylistFile.Dispose();
+                openPlaylistFile = null;
                 return;
+            }
 
-            playlistFileName = openPlaylistFile.FileName;
+            //playlistFileName = openPlaylistFile.FileName;
+            //openPlaylistFile.Dispose();
 
-            openPlaylist();
+            //openPlaylist();
 
-            new Data().Save("playlistFilePath", playlistFileName);
+            //new Data().Save("playlistFilePath", playlistFileName);
         }
 
         /// <summary>
@@ -218,10 +223,14 @@ namespace kdcnovAutoWinForms
                     FillListView();
                 }
             }
-            catch
+            catch (FileNotFoundException e)
             {
                 MessageBox.Show("Плейлист не найден! откройте файл плейлиста или создайте новый", "Файл плейлиста не найден!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 createPlaylist();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка открытия плейлиста", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
