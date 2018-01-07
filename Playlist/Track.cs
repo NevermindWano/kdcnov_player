@@ -24,18 +24,34 @@ namespace PlaylistLib
     }
 
     [Serializable]
+    public enum oscMode
+    {
+        track,
+        clip,
+        custom
+    }
+
+    [Serializable]
     public class Track
     {
         public string name { get; set; }
         public string audioFilePath { get; set; }
         public string duration { get; set; }
         public nextTrack next { get; set; }
+        public string mode { get; set; }
         public Track nextBg { get; set; }
         public int bpm { get; set; }
         public bool isMidiNote { get; set; }
         public int midiNote { get; set; }
         public string midiFile { get; set; }
+        /// <summary>
+        /// oscCommand следует читать как oscTrack. Оставленно для совместимости с 
+        /// предыдущими версиями
+        /// </summary>
         public int oscCommand { get; set; }
+        public int oscClip { get; set; }
+        public int oscLayer { get; set; }
+        public string oscCustom { get; set; }
         public bool bg { get; set; }
         public bool isPlaylistTrack { get; set; }
 

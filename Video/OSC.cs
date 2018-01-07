@@ -12,27 +12,26 @@ namespace Video
         static UDPSender sender { get; set; }
 
         public static void Init(string ip, int port)
-        {
-            if (sender == null)
-                sender = new UDPSender(ip, port);           
+        {           
+            sender = new UDPSender(ip, port);           
         }
 
-        public static void Send(string address)
+        public static void Send(string message)
         {
-            var message = new OscMessage(address, 1);
-            sender.Send(message);
+            var msg = new OscMessage(message, 1);
+            sender.Send(msg);
         }
 
-        public static void OnTrack(int trackNumber)
+        public static void Send(int trackNumber)
         {
-            string address = "/track" + Convert.ToInt16(trackNumber) + "/connect";
-            Send(address);
+            string message = "/track" + Convert.ToInt16(trackNumber) + "/connect";
+            Send(message);
         }
 
-        public static void OnClip(int numberLayer, int numberClip)
+        public static void Send(int numberLayer, int numberClip)
         {
-            string address = "/layer" + Convert.ToInt16(numberLayer) + "/clip" + Convert.ToInt16(numberClip) + "/connect";
-            Send(address);
+            string message = "/layer" + Convert.ToInt16(numberLayer) + "/clip" + Convert.ToInt16(numberClip) + "/connect";
+            Send(message);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DataProvider
     {
         private IKeyValueProvider provider = new RegistryProvider();
 
-        #region CONSTRUCTORS
+#region CONSTRUCTORS
 
         public Data() {}
 

@@ -27,9 +27,22 @@ namespace kdcnovAutoWinForms
 
             nameTextBox.Text = track.name;
             bpmUpDown.Value = track.bpm;
-            oscUpDown.Value = track.oscCommand;
 
-           // nextComboBox.DataSource = Enum.GetValues(typeof(nextTrack));
+
+            oscUpDown.Value = track.oscCommand;
+            clipUpDown.Value = track.oscClip;
+            layerUpDown.Value = track.oscLayer;
+            customOSCTextBox.Text = track.oscCustom;
+
+            RadioButton checkedButton =  OSCBox.Controls.OfType<RadioButton>()
+                                   .Where(r => r.Tag.ToString() == track.mode)
+                                   .FirstOrDefault();
+            if (checkedButton != null)
+                checkedButton.Checked =  true;
+
+            setRadios(OSCBox);
+
+            // nextComboBox.DataSource = Enum.GetValues(typeof(nextTrack));
 
             nextComboBox.DisplayMember = "Description";
             nextComboBox.ValueMember = "Value";
@@ -46,7 +59,7 @@ namespace kdcnovAutoWinForms
 
             midiFileRadio.Checked = (!track.isMidiNote) ? true : false;            
             bgRadioButton.Checked = (track.bg) ? true : false;
-            setRadios();
+            setRadios(midiGroupBox);
 
 
             midiFileTextBox.Text = track.midiFile;
@@ -66,13 +79,18 @@ namespace kdcnovAutoWinForms
             track.bpm = (int)bpmUpDown.Value;
             track.next = (nextTrack)nextComboBox.SelectedValue;
             track.midiNote = (int)midiUpDown.Value;
+
+            // Сохраняем настройки osc.
+
             track.oscCommand = (int)oscUpDown.Value;
+            track.oscClip = (int)clipUpDown.Value;
+            track.oscLayer = (int)layerUpDown.Value;
+            track.oscCustom = customOSCTextBox.Text;
+            track.mode = getCheckedButton(OSCBox).Tag.ToString();
 
-            if (midiFileRadio.Checked)
-                track.isMidiNote = false;
-            else
-                track.isMidiNote = true;
 
+            // Сохраняем настройки midi
+            track.isMidiNote = (getCheckedButton(midiGroupBox) == midiFileRadio) ? false : true;
             track.midiNote = (int)midiUpDown.Value;
             track.midiFile = midiFileTextBox.Text;
             track.bg = (mainRadioButton.Checked) ? false : true;
@@ -92,31 +110,33 @@ namespace kdcnovAutoWinForms
 
         private void oscSendButton_Click(object sender, EventArgs e)
         {
-            OSC.OnTrack((int)oscUpDown.Value);
+            var checkedButton = getCheckedButton(OSCBox).Tag;
+
+            switch (checkedButton)
+            {
+                case "track":
+                    OSC.Send((int)oscUpDown.Value);
+                    break;
+                case "clip":
+                    OSC.Send((int)layerUpDown.Value, (int)clipUpDown.Value);
+                    break;
+                case "custom":
+                    OSC.Send(customOSCTextBox.Text);
+                    break;
+            }
+
+                                            
+            
         }
 
         private void midiNoteRadio_CheckedChanged(object sender, EventArgs e)
         {
-            setRadios();
-        }
-
-        private void setRadios()
-        {
-            if (midiNoteRadio.Checked)
-            {
-                midiFileTextBox.Enabled = false;
-                midiUpDown.Enabled = true;
-            }
-            if (midiFileRadio.Checked)
-            {
-                midiUpDown.Enabled = false;
-                midiFileTextBox.Enabled = true;
-            }
+            setRadios(midiGroupBox);
         }
 
         private void midiFileRadio_CheckedChanged(object sender, EventArgs e)
         {
-            setRadios();
+            setRadios(midiGroupBox);
         }
 
         private void midiFileTextBox_DoubleClick(object sender, EventArgs e)
@@ -127,6 +147,41 @@ namespace kdcnovAutoWinForms
             {
                 midiFileTextBox.Text = ofd.FileName;
             }
+        }
+
+        private void ResolumeTRACK_CheckedChanged(object sender, EventArgs e)
+        {
+            setRadios(OSCBox);
+        }
+
+        private void ResolumeCLIP_CheckedChanged(object sender, EventArgs e)
+        {
+            setRadios(OSCBox);
+        }
+
+        private void customOSCCommand_CheckedChanged(object sender, EventArgs e)
+        {
+            setRadios(OSCBox);
+        }
+
+        private void setRadios(GroupBox box)
+        {
+            RadioButton checkedButton = getCheckedButton(box);
+
+            foreach (Control cnt in box.Controls)
+            {
+                if (cnt is RadioButton || cnt is Button) continue;
+                if (cnt.Tag == checkedButton.Tag)
+                    cnt.Enabled = true;
+                else
+                    cnt.Enabled = false;
+            }
+        }
+
+        private RadioButton getCheckedButton(GroupBox box)
+        {
+            return box.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
         }
     }
 }

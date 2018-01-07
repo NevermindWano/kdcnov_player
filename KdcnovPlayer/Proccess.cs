@@ -61,11 +61,32 @@ namespace kdcnovAutoWinForms
         {
             Data options = new Data();
 
-            /// MIDI Выход
+            /// Инициализация плеера
+            string setPlayer = options.Read<string>("defaultPlayer");
+            if (player == null || player.name != setPlayer)
+            {
+                if (setPlayer != null)
+                {
+                    switch (setPlayer)
+                    {
+                        case "naudio":
+                            player = new NAudioPlayer();
+                            break;
+                        case "aimp":
+                            player = new AIMPPlayer();
+                            break;
+                    }
+                }
+                else
+                {
+                    player = new AIMPPlayer();
+                }
+            }
 
             await Task.Run(() =>
             {
 
+                /// MIDI Выход
                 int midiDevice = 0;
                 midiDevice = options.Read<int>("midiDeviceNo");
                 try
@@ -81,37 +102,16 @@ namespace kdcnovAutoWinForms
                 playerBgVolume = options.Read<int>("bgVolume");
 
 
-                /// Инициализация OSC протокола
+                /// Инициализация OSC
                 ip = options.Read<string>("oscIP");
                 port = options.Read<int>("oscPORT");
                 ip = ip ?? "127.0.0.1";
                 port = (port != 0) ? port : 7000;
 
                 OSC.Init(ip, port);
-
-                /// Инициализация плеера
-                string setPlayer = options.Read<string>("defaultPlayer");
-                if (player == null || player.name != setPlayer)
-                {
-                    if (setPlayer != null)
-                    {
-                        switch (setPlayer)
-                        {
-                            case "naudio":
-                                player = new NAudioPlayer();
-                                break;
-                            case "aimp":
-                                player = new AIMPPlayer();
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        player = new AIMPPlayer();
-                    }
-                }
-
             });
+            
+
             string value = options.Read<string>("bgPlaylistFolder");
             if (value != null)
                 bgPlaylist = new BgPlaylist(value);
@@ -206,12 +206,27 @@ namespace kdcnovAutoWinForms
         /// <summary>
         /// Передаём OSC комманду.
         /// </summary>
-        private static void oscSend()
+        private static async void oscSend()
         {
-           OSC.OnTrack(currentTrack.oscCommand);
+           await Task.Run(() =>
+           {
+               switch(currentTrack.mode)
+               {
+                   case "track":
+                       OSC.Send(currentTrack.oscCommand);
+                       break;
+                   case "clip":
+                       OSC.Send(currentTrack.oscLayer, currentTrack.oscClip);
+                       break;
+                   case "custom":
+                       OSC.Send(currentTrack.oscCustom);
+                       break;
+               }
+               
+           });
         }
 
-        private static void midiSend()
+        private static async void midiSend()
         {
             if (currentTrack.isMidiNote == false && currentTrack.midiFile != null)
             {
@@ -219,7 +234,10 @@ namespace kdcnovAutoWinForms
                 return;
             }
 
-            NAudioMidi.Send(currentTrack.midiNote);
+            await Task.Run(() =>
+            {
+                NAudioMidi.Send(currentTrack.midiNote);
+            });
             //NAudioMidi.playFile(@"D:\00000\ttt.midi");            
         }
 
