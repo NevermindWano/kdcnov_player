@@ -145,7 +145,7 @@ namespace kdcnovAutoWinForms
                 bg = true,
                 isMidiNote = true,
                 midiNote = (rndMidi == 0) ? 0 : bgPlaylist.midiNotes[rndMidi],
-                oscCommand = (rndOsc == 0) ? 0 : bgPlaylist.oscTracks[rndOsc],
+                oscTrack = (rndOsc == 0) ? 0 : bgPlaylist.oscTracks[rndOsc],
                 next = nextTrack.bgRandom
             }, currentKey);
         }
@@ -210,7 +210,7 @@ namespace kdcnovAutoWinForms
         {
            await Task.Run(() =>
            {
-               currentTrack.mode.Send(currentTrack);               
+               currentTrack.OSCMode.Send();               
            });
         }
 

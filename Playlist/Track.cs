@@ -27,17 +27,28 @@ namespace PlaylistLib
         public string audioFilePath { get; set; }
         public string duration { get; set; }
         public nextTrack next { get; set; }
-        public ITrackOSCState mode { get; set; }
+
+        private ITrackOSCState oscMode;
+        public ITrackOSCState OSCMode
+        {
+            get
+            {
+                if (oscMode != null)
+                    return oscMode;
+                else return new OSCState_track(this);
+            }
+            set
+            {
+                oscMode = value;
+            }
+        }
+
         public Track nextBg { get; set; }
         public int bpm { get; set; }
         public bool isMidiNote { get; set; }
         public int midiNote { get; set; }
         public string midiFile { get; set; }
-        /// <summary>
-        /// oscCommand следует читать как oscTrack. Оставленно для совместимости с 
-        /// предыдущими версиями
-        /// </summary>
-        public int oscCommand { get; set; }
+        public int oscTrack { get; set; }
         public int oscClip { get; set; }
         public int oscLayer { get; set; }
         public string oscCustom { get; set; }
@@ -59,7 +70,7 @@ namespace PlaylistLib
             {
                 audioFilePath = value;
                 midiNote = options.Read<int>("mainMidiNote");
-                oscCommand = options.Read<int>("mainTrackOsc");
+                oscTrack = options.Read<int>("mainTrackOsc");
                 bg = true;
                 isMidiNote = true;
                 next = nextTrack.cycle;

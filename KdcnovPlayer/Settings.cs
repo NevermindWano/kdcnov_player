@@ -56,7 +56,7 @@ namespace kdcnovAutoWinForms
             if (Proccess.bgMain.audioFilePath != null)
             {
                 mainTrackTextBox.Text = Proccess.bgMain.audioFilePath;
-                mainTrackOSCUpDown.Value = Proccess.bgMain.oscCommand;
+                mainTrackOSCUpDown.Value = Proccess.bgMain.oscTrack;
                 mainTrackMIdi.Value = Proccess.bgMain.midiNote;
             }
 
@@ -144,7 +144,7 @@ namespace kdcnovAutoWinForms
             {
                 audioFilePath = mainTrackTextBox.Text,
                 midiNote = (int)mainTrackMIdi.Value,
-                oscCommand = (int)mainTrackOSCUpDown.Value
+                oscTrack = (int)mainTrackOSCUpDown.Value
             };
 
             options.Save("mainTrackPath", mainTrackTextBox.Text);

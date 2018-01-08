@@ -22,9 +22,9 @@ namespace kdcnovAutoWinForms
         {
             InitializeComponent();
 
-            var tagClip     = new OSCState_clip();
-            var tagTrack    = new OSCState_track();
-            var tagCustom = new OSCState_custom();
+            var tagClip     = new OSCState_clip(track);
+            var tagTrack    = new OSCState_track(track);
+            var tagCustom   = new OSCState_custom(track);
 
             ResolumeTRACK.Tag = oscUpDown.Tag = tagTrack;
             ResolumeCLIP.Tag = clipUpDown.Tag = layerUpDown.Tag = tagClip;
@@ -35,13 +35,13 @@ namespace kdcnovAutoWinForms
 
             nameTextBox.Text = track.name;
             bpmUpDown.Value = track.bpm;
-            oscUpDown.Value = track.oscCommand;
+            oscUpDown.Value = track.oscTrack;
             clipUpDown.Value = track.oscClip;
             layerUpDown.Value = track.oscLayer;
             customOSCTextBox.Text = track.oscCustom;
 
             RadioButton checkedButton =  OSCBox.Controls.OfType<RadioButton>()                                 
-                                   .FirstOrDefault(r => r.Tag.GetType() == track.mode.GetType());
+                                   .FirstOrDefault(r => r.Tag.GetType() == track.OSCMode.GetType());
 
             if (checkedButton != null)
                 checkedButton.Checked =  true;
@@ -105,11 +105,11 @@ namespace kdcnovAutoWinForms
 
         private void saveOSC()
         {
-            track.oscCommand = (int)oscUpDown.Value;
+            track.oscTrack = (int)oscUpDown.Value;
             track.oscClip = (int)clipUpDown.Value;
             track.oscLayer = (int)layerUpDown.Value;
             track.oscCustom = customOSCTextBox.Text;
-            track.mode = (ITrackOSCState)getCheckedButton(OSCBox).Tag;
+            track.OSCMode = (ITrackOSCState)getCheckedButton(OSCBox).Tag;
         }
 
         private void sendMidiButton_Click(object sender, EventArgs e)
@@ -121,7 +121,7 @@ namespace kdcnovAutoWinForms
         {
             saveOSC();
             var checkedButton = (ITrackOSCState)getCheckedButton(OSCBox).Tag;
-            checkedButton.Send(track);                                         
+            checkedButton.Send();                                         
 
         }
 
