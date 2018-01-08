@@ -100,7 +100,7 @@ namespace kdcnovAutoWinForms
             if (Proccess.mainPlayList.namePlaylist == null || Proccess.mainPlayList.namePlaylist == "")
                 form.SaveAsMenuItem_Click(sender, e);
             else
-                Proccess.mainPlayList.Save(form.playlistFileName);
+                Proccess.mainPlayList.Save(Proccess.mainPlayList.namePlaylist);
             Close();
         }
 
