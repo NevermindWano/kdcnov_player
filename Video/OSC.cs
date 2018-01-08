@@ -1,37 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SharpOSC;
 
 namespace Video
 {
+    public delegate void SendCustom(string message);
+    public delegate void SendTrack(int trackNumber);
+    public delegate void SendClip(int numberLayer, int numberClip);
+
     public static class OSC
     {
         static UDPSender sender { get; set; }
 
+        public static SendCustom sendCustom;
+        public static SendTrack sendTrack;
+        public static SendClip sendClip;
+
         public static void Init(string ip, int port)
         {           
-            sender = new UDPSender(ip, port);           
+            sender = new UDPSender(ip, port);
+
+            sendCustom = new SendCustom(send);
+            sendTrack = new SendTrack(send);
+            sendClip = new SendClip(send);
         }
 
-        public static void Send(string message)
+        private static void send(string message)
         {
             var msg = new OscMessage(message, 1);
             sender.Send(msg);
         }
 
-        public static void Send(int trackNumber)
+        private static void send(int trackNumber)
         {
             string message = "/track" + Convert.ToInt16(trackNumber) + "/connect";
-            Send(message);
+            send(message);
         }
 
-        public static void Send(int numberLayer, int numberClip)
+        private static void send(int numberLayer, int numberClip)
         {
             string message = "/layer" + Convert.ToInt16(numberLayer) + "/clip" + Convert.ToInt16(numberClip) + "/connect";
-            Send(message);
+            send(message);
         }
     }
 }

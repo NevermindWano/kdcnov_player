@@ -210,19 +210,7 @@ namespace kdcnovAutoWinForms
         {
            await Task.Run(() =>
            {
-               switch(currentTrack.mode)
-               {
-                   case "track":
-                       OSC.Send(currentTrack.oscCommand);
-                       break;
-                   case "clip":
-                       OSC.Send(currentTrack.oscLayer, currentTrack.oscClip);
-                       break;
-                   case "custom":
-                       OSC.Send(currentTrack.oscCustom);
-                       break;
-               }
-               
+               currentTrack.mode.Send(currentTrack);               
            });
         }
 

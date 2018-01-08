@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataProvider;
+
 
 namespace PlaylistLib
 {
@@ -24,21 +21,13 @@ namespace PlaylistLib
     }
 
     [Serializable]
-    public enum oscMode
-    {
-        track,
-        clip,
-        custom
-    }
-
-    [Serializable]
     public class Track
     {
         public string name { get; set; }
         public string audioFilePath { get; set; }
         public string duration { get; set; }
         public nextTrack next { get; set; }
-        public string mode { get; set; }
+        public ITrackOSCState mode { get; set; }
         public Track nextBg { get; set; }
         public int bpm { get; set; }
         public bool isMidiNote { get; set; }

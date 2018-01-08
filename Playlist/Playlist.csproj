@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OSCState.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Track.cs" />
@@ -49,6 +50,10 @@
     <ProjectReference Include="..\DataProvider\DataProvider.csproj">
       <Project>{d72c38d1-41b2-43cc-9d7d-d466fae34330}</Project>
       <Name>DataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Video\OSC.csproj">
+      <Project>{0e3d5620-9ee0-4daf-9f23-1e7b8cd8ef6a}</Project>
+      <Name>OSC</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

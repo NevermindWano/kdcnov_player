@@ -42,8 +42,6 @@
             this.portUpDown = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.IPLabel = new System.Windows.Forms.Label();
-            this.customRadioButton = new System.Windows.Forms.RadioButton();
-            this.resolumeRadioButton = new System.Windows.Forms.RadioButton();
             this.aimpCheckBox = new System.Windows.Forms.CheckBox();
             this.aimpRadioButton = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
@@ -71,6 +69,12 @@
             this.openFolderButton = new System.Windows.Forms.Button();
             this.colors = new System.Windows.Forms.TabPage();
             this.fontsGroupBox = new System.Windows.Forms.GroupBox();
+            this.bgFontButton = new System.Windows.Forms.Button();
+            this.bgFontTextBox = new System.Windows.Forms.TextBox();
+            this.mainFontTextBox = new System.Windows.Forms.TextBox();
+            this.mainFontButton = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.bgTrackFontColor = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
@@ -84,13 +88,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.mainFontButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mainFontTextBox = new System.Windows.Forms.TextBox();
-            this.bgFontTextBox = new System.Windows.Forms.TextBox();
-            this.bgFontButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -190,11 +188,9 @@
             this.OSCPanel.Controls.Add(this.portUpDown);
             this.OSCPanel.Controls.Add(this.label13);
             this.OSCPanel.Controls.Add(this.IPLabel);
-            this.OSCPanel.Controls.Add(this.customRadioButton);
-            this.OSCPanel.Controls.Add(this.resolumeRadioButton);
             this.OSCPanel.Location = new System.Drawing.Point(8, 236);
             this.OSCPanel.Name = "OSCPanel";
-            this.OSCPanel.Size = new System.Drawing.Size(755, 93);
+            this.OSCPanel.Size = new System.Drawing.Size(755, 119);
             this.OSCPanel.TabIndex = 5;
             // 
             // ipTextBox
@@ -233,28 +229,6 @@
             this.IPLabel.Size = new System.Drawing.Size(17, 13);
             this.IPLabel.TabIndex = 2;
             this.IPLabel.Text = "IP";
-            // 
-            // customRadioButton
-            // 
-            this.customRadioButton.AutoSize = true;
-            this.customRadioButton.Location = new System.Drawing.Point(18, 58);
-            this.customRadioButton.Name = "customRadioButton";
-            this.customRadioButton.Size = new System.Drawing.Size(204, 17);
-            this.customRadioButton.TabIndex = 1;
-            this.customRadioButton.TabStop = true;
-            this.customRadioButton.Text = "Иное (пользовательские команды)";
-            this.customRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // resolumeRadioButton
-            // 
-            this.resolumeRadioButton.AutoSize = true;
-            this.resolumeRadioButton.Location = new System.Drawing.Point(18, 35);
-            this.resolumeRadioButton.Name = "resolumeRadioButton";
-            this.resolumeRadioButton.Size = new System.Drawing.Size(359, 17);
-            this.resolumeRadioButton.TabIndex = 0;
-            this.resolumeRadioButton.TabStop = true;
-            this.resolumeRadioButton.Text = "Использовать OSC протокол для связи с Resolume Aveneu/Arena";
-            this.resolumeRadioButton.UseVisualStyleBackColor = true;
             // 
             // aimpCheckBox
             // 
@@ -542,6 +516,58 @@
             this.fontsGroupBox.TabStop = false;
             this.fontsGroupBox.Text = "ШРИФТЫ";
             // 
+            // bgFontButton
+            // 
+            this.bgFontButton.Location = new System.Drawing.Point(456, 45);
+            this.bgFontButton.Name = "bgFontButton";
+            this.bgFontButton.Size = new System.Drawing.Size(75, 23);
+            this.bgFontButton.TabIndex = 5;
+            this.bgFontButton.Text = "Изменить";
+            this.bgFontButton.UseVisualStyleBackColor = true;
+            this.bgFontButton.Click += new System.EventHandler(this.bgFontButton_Click);
+            // 
+            // bgFontTextBox
+            // 
+            this.bgFontTextBox.Location = new System.Drawing.Point(213, 47);
+            this.bgFontTextBox.Name = "bgFontTextBox";
+            this.bgFontTextBox.Size = new System.Drawing.Size(237, 20);
+            this.bgFontTextBox.TabIndex = 4;
+            // 
+            // mainFontTextBox
+            // 
+            this.mainFontTextBox.Location = new System.Drawing.Point(213, 17);
+            this.mainFontTextBox.Name = "mainFontTextBox";
+            this.mainFontTextBox.Size = new System.Drawing.Size(237, 20);
+            this.mainFontTextBox.TabIndex = 3;
+            // 
+            // mainFontButton
+            // 
+            this.mainFontButton.Location = new System.Drawing.Point(456, 15);
+            this.mainFontButton.Name = "mainFontButton";
+            this.mainFontButton.Size = new System.Drawing.Size(75, 23);
+            this.mainFontButton.TabIndex = 2;
+            this.mainFontButton.Text = "Изменить";
+            this.mainFontButton.UseVisualStyleBackColor = true;
+            this.mainFontButton.Click += new System.EventHandler(this.mainFontButton_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(13, 50);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(154, 13);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "ШРИФТ ФОНОВОГО ТРЕКА";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(9, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(198, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "ОСНОВНОЙ ШРИФТ  В ПЛЕЙЛИСТЕ";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.bgTrackFontColor);
@@ -657,62 +683,10 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(9, 20);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(198, 13);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "ОСНОВНОЙ ШРИФТ  В ПЛЕЙЛИСТЕ";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(13, 50);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(154, 13);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "ШРИФТ ФОНОВОГО ТРЕКА";
-            // 
-            // mainFontButton
-            // 
-            this.mainFontButton.Location = new System.Drawing.Point(456, 15);
-            this.mainFontButton.Name = "mainFontButton";
-            this.mainFontButton.Size = new System.Drawing.Size(75, 23);
-            this.mainFontButton.TabIndex = 2;
-            this.mainFontButton.Text = "Изменить";
-            this.mainFontButton.UseVisualStyleBackColor = true;
-            this.mainFontButton.Click += new System.EventHandler(this.mainFontButton_Click);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // mainFontTextBox
-            // 
-            this.mainFontTextBox.Location = new System.Drawing.Point(213, 17);
-            this.mainFontTextBox.Name = "mainFontTextBox";
-            this.mainFontTextBox.Size = new System.Drawing.Size(237, 20);
-            this.mainFontTextBox.TabIndex = 3;
-            // 
-            // bgFontTextBox
-            // 
-            this.bgFontTextBox.Location = new System.Drawing.Point(213, 47);
-            this.bgFontTextBox.Name = "bgFontTextBox";
-            this.bgFontTextBox.Size = new System.Drawing.Size(237, 20);
-            this.bgFontTextBox.TabIndex = 4;
-            // 
-            // bgFontButton
-            // 
-            this.bgFontButton.Location = new System.Drawing.Point(456, 45);
-            this.bgFontButton.Name = "bgFontButton";
-            this.bgFontButton.Size = new System.Drawing.Size(75, 23);
-            this.bgFontButton.TabIndex = 5;
-            this.bgFontButton.Text = "Изменить";
-            this.bgFontButton.UseVisualStyleBackColor = true;
-            this.bgFontButton.Click += new System.EventHandler(this.bgFontButton_Click);
             // 
             // Settings
             // 
@@ -782,8 +756,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel OSCPanel;
-        private System.Windows.Forms.RadioButton customRadioButton;
-        private System.Windows.Forms.RadioButton resolumeRadioButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox midiDeviceComboBox;
         private System.Windows.Forms.Label midiDeviceLabel;

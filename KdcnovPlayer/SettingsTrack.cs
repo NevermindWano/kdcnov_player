@@ -22,21 +22,28 @@ namespace kdcnovAutoWinForms
         {
             InitializeComponent();
 
+            var tagClip     = new OSCState_clip();
+            var tagTrack    = new OSCState_track();
+            var tagCustom = new OSCState_custom();
+
+            ResolumeTRACK.Tag = oscUpDown.Tag = tagTrack;
+            ResolumeCLIP.Tag = clipUpDown.Tag = layerUpDown.Tag = tagClip;
+            customOSCCommand.Tag = customOSCTextBox.Tag = tagCustom;
+
             this.track = track;
             this.form = form;
 
             nameTextBox.Text = track.name;
             bpmUpDown.Value = track.bpm;
-
-
             oscUpDown.Value = track.oscCommand;
             clipUpDown.Value = track.oscClip;
             layerUpDown.Value = track.oscLayer;
             customOSCTextBox.Text = track.oscCustom;
 
             RadioButton checkedButton =  OSCBox.Controls.OfType<RadioButton>()
-                                   .Where(r => r.Tag.ToString() == track.mode)
+                                   .Where(r => r.Tag == track.mode)
                                    .FirstOrDefault();
+
             if (checkedButton != null)
                 checkedButton.Checked =  true;
 
@@ -61,7 +68,6 @@ namespace kdcnovAutoWinForms
             bgRadioButton.Checked = (track.bg) ? true : false;
             setRadios(midiGroupBox);
 
-
             midiFileTextBox.Text = track.midiFile;
             midiUpDown.Value = track.midiNote;
 
@@ -81,12 +87,7 @@ namespace kdcnovAutoWinForms
             track.midiNote = (int)midiUpDown.Value;
 
             // Сохраняем настройки osc.
-
-            track.oscCommand = (int)oscUpDown.Value;
-            track.oscClip = (int)clipUpDown.Value;
-            track.oscLayer = (int)layerUpDown.Value;
-            track.oscCustom = customOSCTextBox.Text;
-            track.mode = getCheckedButton(OSCBox).Tag.ToString();
+            saveOSC();
 
 
             // Сохраняем настройки midi
@@ -99,8 +100,17 @@ namespace kdcnovAutoWinForms
             if (Proccess.mainPlayList.namePlaylist == null || Proccess.mainPlayList.namePlaylist == "")
                 form.SaveAsMenuItem_Click(sender, e);
             else
-              Proccess.mainPlayList.Save(form.playlistFileName);
+                Proccess.mainPlayList.Save(form.playlistFileName);
             Close();
+        }
+
+        private void saveOSC()
+        {
+            track.oscCommand = (int)oscUpDown.Value;
+            track.oscClip = (int)clipUpDown.Value;
+            track.oscLayer = (int)layerUpDown.Value;
+            track.oscCustom = customOSCTextBox.Text;
+            track.mode = (ITrackOSCState)getCheckedButton(OSCBox).Tag;
         }
 
         private void sendMidiButton_Click(object sender, EventArgs e)
@@ -110,23 +120,10 @@ namespace kdcnovAutoWinForms
 
         private void oscSendButton_Click(object sender, EventArgs e)
         {
-            var checkedButton = getCheckedButton(OSCBox).Tag;
+            saveOSC();
+            var checkedButton = (ITrackOSCState)getCheckedButton(OSCBox).Tag;
+            checkedButton.Send(track);                                         
 
-            switch (checkedButton)
-            {
-                case "track":
-                    OSC.Send((int)oscUpDown.Value);
-                    break;
-                case "clip":
-                    OSC.Send((int)layerUpDown.Value, (int)clipUpDown.Value);
-                    break;
-                case "custom":
-                    OSC.Send(customOSCTextBox.Text);
-                    break;
-            }
-
-                                            
-            
         }
 
         private void midiNoteRadio_CheckedChanged(object sender, EventArgs e)
