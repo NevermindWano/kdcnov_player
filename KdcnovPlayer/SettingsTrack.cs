@@ -40,9 +40,8 @@ namespace kdcnovAutoWinForms
             layerUpDown.Value = track.oscLayer;
             customOSCTextBox.Text = track.oscCustom;
 
-            RadioButton checkedButton =  OSCBox.Controls.OfType<RadioButton>()
-                                   .Where(r => r.Tag == track.mode)
-                                   .FirstOrDefault();
+            RadioButton checkedButton =  OSCBox.Controls.OfType<RadioButton>()                                 
+                                   .FirstOrDefault(r => r.Tag.GetType() == track.mode.GetType());
 
             if (checkedButton != null)
                 checkedButton.Checked =  true;
